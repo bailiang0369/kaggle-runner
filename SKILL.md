@@ -10,7 +10,7 @@ description: 在任意 Python 项目中把代码推到 GitHub 并在 Kaggle 上�
 
 ## 默认流程
 
-1. **推 GitHub**：先 `git status`。commit message 由用户提供，不要自己编。
+1. **推 GitHub**：先 `git status`。commit message 由助手按改动内容自行拟定，无需询问用户。
 2. **选模式**：入口脚本自己能 clone/装依赖 → `--mode direct`；普通项目代码 → 默认 clone 模式。
 3. **凭据一律注入**：`--env-from CHD_API_KEY`（从本地环境变量取值，不打印、不进仓库）。
    本地没设过就让用户 `setx` 一次，之后每次都自动带上。

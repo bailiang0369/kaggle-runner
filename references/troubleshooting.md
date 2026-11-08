@@ -11,6 +11,10 @@
 | `kaggle kernels output` 有几十 MB | 入口把中间缓存写进 `/kaggle/working`（如 75MB K 线缓存）。用 `kk pull --pattern` 过滤 |
 | 中文日志乱码 | kk 内部已强制 `PYTHONUTF8=1`；自己直接调 kaggle CLI 时也要设 |
 | 时间对不上 | Kaggle 是 UTC，本地 +8 |
+| Output 页没有 “Create Dataset” 按钮 | 新 UI 已移除。用容器内中转：开一个 maker kernel，里面 `kaggle kernels output <src>`（内网 56MB/s）→ `kaggle datasets create`。430MB 只需约 50 秒，本地零带宽 |
+| 容器里 `python -m kaggle` 报 `No module named kaggle.__main__` | 镜像自带 2.0.2 没有 `__main__.py`。先 `pip install -U kaggle`，再调 `kaggle` 命令本身（console script） |
+| `datasets create` 报 `id` 前缀错 | dataset id 前缀必须是 Kaggle **用户名**（不是 GitHub 用户名） |
+| push 报 `409 Conflict` | 之前 title 与 slug 不同源导致 Kaggle 改写 id，再用旧 slug 就撞车。取 push 输出里的真实 slug |
 
 ## 长任务前必查
 

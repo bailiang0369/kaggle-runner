@@ -364,7 +364,11 @@ def cmd_push(args) -> None:
         save_state(slug=slug, entry=entry, repo=url)
         log("[kk] --dry-run，跳过 push")
         log("-" * 60)
-        log((d / code_file).read_text(encoding="utf-8"))
+        text = (d / code_file).read_text(encoding="utf-8")
+        for k, v in env.items():                      # dry-run 也要打码，别把凭据打到终端
+            if v and SECRET_HINT.search(k):
+                text = text.replace(v, "***")
+        log(text)
         return
 
     r = sh([kaggle_bin(), "kernels", "push", "-p", str(d)], check=False)
